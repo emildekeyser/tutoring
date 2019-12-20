@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Beschrijving:
+#   Best practices template
+#
+# Arguments:
+#   Arg1 is een getal
+#   Arg2 is een file
+#
+# Auteur: Voornaam Naam Email
+# Copyright: 2019 MIT Email
+#
+# Versie: 0.1
+#
+# Requires: Standaard shell commando's
+#
+
+reset='[0m'
+rood='[0;31m'
+function printError() {
+  #foutmeldingen versturen naar stderr met >&2
+  #foutmeldingen bevatten ook het naam van het script ($0 of basename $0)
+  echo -e "\e$rood $0" >&2
+  echo -e "$1" >&2
+  echo -e "\e$reset" >&2
+}
+
+#check op root:
+if [ "$(id -u)" != "0" ]; then
+  printError "Dit programma moet uitgevoerd worden als root"
+  exit 1
+fi
+
+#help argument
+if [ "$1" = "--help" ] ; then
+  echo "Help `basename $0`:"
+  echo -e "\nBeschrijving: "
+  echo -e "\tVervang dit door de beschrijving"
+
+  echo -e "\nArgumenten: "
+
+  echo -e "\n\tArgument 1: "
+  echo -e "\t\tBeschrijving van argument 1"
+  echo -e "\n\tArgument 2: "
+  echo -e "\t\tBeschrijving van argument 2"
+
+  echo -e "\nVoorbeeld:"
+  echo -e "\tvoorbeeld hier"
+  exit 0
+fi

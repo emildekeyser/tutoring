@@ -1,0 +1,676 @@
+# hidden map/file
+mkdir .verstopt touch .onzichtbaar
+
+# view permissions
+ls -l
+
+#user aan groep toevoegen
+sudo usermod -aG groep user
+
+#change the owner or the owner and group 
+chown user:group filename
+
+#Met welk commando kan je als root alle bestanden uit de directory /var/log die in de laatste 60 minuten gewijzigd zijn kopiëren naar de map /root 
+Zorg dat er geen foutmeldingen op het scherm verschijnen.
+find ./ -type f -mmin -60  -exec cp -pf {} /var/log/ \;
+
+#reformats the paragtaphs within a file
+fmt
+
+#verschil grep en egrep
+grep gebruikt basis regex egrep extended regex
+
+#2 files bijelkaar voegen
+join
+
+#allows to run a program with a specified priority
+nice
+
+# show the currently working directory
+pwd
+------------------------
+ls: bestanden in de huidige directory  (-l voor de tijdstippen van wijzigen) (-a hidden files weergeven)
+dir: mappen in de huidige directory
+pwd : present working directory
+cd  : navigeren door alle mappen
+touch: Datum van een bestand veranderen & bestand aanmaken.
+cd ~ : terug naar  de main directory
+cat :  bestand lezen
+rm  verwijderen van bestanden (rm bestandje
+mkdir : maak nieuwe directory (mkdir map1/submap1) -> gaat een submap maken in map 1 indien deze nog niet bestaat zet mkdir -p ...
+rmdir: verwijder map  indien mappen genest zij rm -r map3 : zal alle mappen weg doen die genest zijn.
+cp : kopieren van iets :bv cp ~/map1/bestandje map2/p
+mv: moven van een bestand kan je ook rechtstreeks bestand hernoemen (mv bestandje /temp/DitIsEenHernoemtBestand
+history: alle commando's geven die uitgevoerd zijn
+find : zoeken van bestanden (find ~ -name "file*")
+				    -name "file*" - type f (files) -mmin(modify time (minuten)) -5 de laatste - bij 5 is super belangrijk anders gaat hij exact 5 min geleden weergeven
+							           - amin (acces time)
+								   - cmin(wijzigen van meta data in het bestand)
+				    find / -type f  -size +10 M	
+				    indien nadien nog doorsturen :  -exec cp {} /.... \;
+				    kan niet pipen naar cp je moet -exec
+alias : maakt een alias van het commando dat er achter komt, kan je het hele commando oproepen zonder dit steeds te moeten invoeren
+
+man: help page altijd in combo met het commando dat je wil , man mv (man -k  passwd  alle manual pages waarbij paswd wordt gebruikt)
+head: eerste 10 lijnen van een programma (eertse 5 , man -n5)
+echo $var : toont de waarde van de variable.
+variablen maken : variablenaam="waarde"
+export : variable beschikbaarstellen voor andere processen.
+nl: voeg standaard lijnen toe in een text document
+sort : sorteren van files (-n voor numeriek sorteren , -u voor uniek te sorteren dubbele waarden worden er van tussen gehaald.)
+ls -l : alle info over  de bestanden wanneer gewijzigd 
+ls -lh: alle info over de bestanden die menselijk leesbaar zijn , geen bytes meer maar naar kb of ...
+ls -ald: geeft alle info over de directory zelf 
+ls -al : geeft alle info over de bestanden in de directory
+
+mkdir -p : mappen direct nesten in elkaar
+rm -r : verwijderen van een map en ook alles weg gooien dat er in staat.
+rm -rf: de f zal forceren dat de directory direct volledig wordt weg gegooid zonder extra vragen.
+
+wc : lijnen , woorden , chars
+wc -l: aantal lijnen
+nl : plaats lijnnummer op het bgein van een lijn.
+
+cp -p : behoudt alle attributen, ook de tijdsAttributen
+cp -rp: recursief en behouden van de tijdsAttributen
+cp -U : Enkel de gewijzigde bestanden kopiëren. (als de tijden zelf veranderd zijn).
+cp -r : gaat ook de mappen kopiëren 
+mv: moven van een bestand   mv ~/bestand1  ~/Documents/
+mv kan ook gebruikt worden voor het hernoemen van bestand bv : mv filesold filesnew
+-------------- rechten------------------------
+su - username  :verwisselen van ingelogd acc
+sudo useradd: user toevoegen	
+passwd usernamne : passwoord van deze user wijzigen.
+passwd -x180 -n 10 -w 7 pedro: passwoord toekennen verloopt na 180 dagen , niet binnen 10 dagen wijzigen, 7 dagen voor expiry warnings.
+sudo usermod : user wijzigen  (-s   /bin/bash   ,-L het account locken)
+sudo groups : in welke group zit ik ( sudo groups user ; in en welke group zit de user)
+sudo groupadd : nieuwe group toevoegen
+sudo usermod -aG group user : toevoegen van een group aan een persoon , zonder a worden alle groupen overschreven
+
+sudo chown: change owner (sudo chown gipi map1/bestand1)
+sudo chgrp : change group 
+sudo chown -R : verander eigenaar en group in eens : chown-R user of user.group
+chmod 777 : ken alle rechten aan elke group
+chmod o+w+r+x   : afnemen is -   /map
+      g+w+r+x
+      u+w+r+x 
+chmod +x maak bestand executable.
+
+rwc rwx rwx
+111 111 111
+421 421 421
+7   7   7
+
+---------------------------------------------------
+--------- partities-------------------
+
+cat /proc/partitions : bekijken van partities
+sudo fdsik -l : bekijken van de partities gedetailleert.
+sudo fdisk naamDisk : maken van een partitie optie ( optie n voor maken van nieuwe partitie) optie d voor verwijderen van partities
+						vervolgens optie p voor een primaire
+						 +1G (+ hoeveel + eeneheid)
+						 vervolgens optie w voor schrijven (q om niet op et slaan in table)
+mkfs:bestandsysteem toekennen aan de partitie(mkfs.bestandsysteem /dev/sda1) optie l om de hele lijst te zien
+					      mkfs.ntfs /dev/sda1
+							
+mounten vd drive: mkdir extradrive  sudo mount /dev/sdb2 extradrive/
+mkswap : swapspace toevoegen (uitbreiding vh ram geheugen).
+swapon: zoals mount voor een map , maakt deze device beschikbaar voor swappen ( swaponn /dev/sdb1)
+df: geeft diskfree (df -h human readable)
+du: disk usages (du -h human readable)
+du -hs
+fcsk: filesystem check (fsck /dev/dsb2) (altijd eerst unmounten vd partitie)
+umount : sudo unmount /dev/sdb2 
+cat /etc/fstab : automatisch mounten bij het heropstarten(de file die dit bijhoud)^
+df -aTh | grep /dev : toon de mounted devices
+fdisk /dev/sdb optie t om het bestaande partitie systeem te veranderen.
+sudo file -sL /dev/sdb1 : check het filesystem van de partitie
+----------------------------------
+
+een ./ zal zeggen in de huidige directory
+een .filename zal een hidden file maken
+
+> -> uitvoer naar de bepaalde map sturen , de file word overschreven !
+>> : uitvoer naar bepaalde mpa sturen , er wordt gewoon aan de file toegevoegd.
+2> : error stream werkt zelfde , zal enkel worden beschreven als we een error hebben.
+echo: wordt gebruikt met een string om de string weg te schrijven in en bestand.
+
+sort: data bestanden sorteren ( sort < /tmp/namen bv)
+sort -f = case insensitive
+sort -h = sorteren op grootte bv. 2Kb < 1Mb < 5 Gb
+sort -u = elimineer dubbele lijnen
+
+dd : letterlijk byte per byte kopieren in het binair. handig voor isoFile
+tar: wordt gebruikt voor back up want kan je ook zippen 
+tar -cvf  ~/Desktop/backup.tar /etc/tmp
+tar -cvzf gzip
+tar -cvjf andere zip, deze duurt langer maar verkleint ook beter. bzip
+tar xvf /home/derest  uitpakken
+tar xvf /home/derest  -C /tmp gaat uitpakken naar /tmp nu 
+tar tvf /home/...  | grep bestand om te kijken of er alles in zit.
+
+stat + filename : gaat alle info geven over die bepaalde file, acces time, modyf time, pos op harde schijf etc
+
+chmod +x : bestand executable maken
+
+-------------------
+scripting
+#!/bin/bash = start van elk script.
+' ' = de tekst hier tussen wordt letterlijk weergegeven 
+var=$(command). de waarde wordt nu in een variable gestoken
+\ om het volgende teken niet te interpreteren .
+env : toon alle environment variablen.
+rekenen : let a3= a1+a2 of let a3 = $a1+$a2
+	 of  a3 =$((a1+a2))	
++:optellen
+/: delen
+* : vermenigvuldigen
+%: moduldo
+
+$* : alle parameters
+$# : hoeveel parameters meegegeven
+inline parameter $1
+		 $2
+for in do done : for lus
+exit code : 0 is gelukt of <>0 dan is niet gelukt.
+$? : geeft de exit code.
+test -z: is de string 0 ?
+test -f /etc/passwd: is er een file die .... heet.
+test -n /etc/passwd : is de string niet 0.
+test -w /.. : is het writable
+test -d /.. : is het een directory
+test ! -d /.. : negatie van ....
+test -e file : true als exist
+test -nt file : newer then
+test $Var1=$var2 : is var 1 gelijk aan var2
+!=: niet gelijk aan 
+test 10 -eq 10 : equal
+test 5 -gt 10 : greater then
+test 5 -lt 10 : less then
+	-le : less or equal then.
+test 11 -ge 10 : greather than or equal.s
+grep -if : zoek case insensitive.
+
+or: || ook gebruiken als het niet gelukt is dan  
+and : && als het wel gelukt is dan 
+sudo apt-get upgrade : als er systeem updates zijn
+
+
+getal omzetten naar binair : loop en wanneer modulo is niet 0 dan zet 1	
+--------------------------------
+softwaremanager	
+
+sudo apt-get install: installeren van een programma
+sudo apt-get update : binnen halen van alle updates.
+sudo apt-get upgrade: het systeem upgraden met de laatste updates
+sudo apt-get remove:
+
+dpkg -l : alle pakketen die geinstalleerd zijn op deze pc
+dpkg -l*: alle beschikbare pakketen.
+dpkg --search /etc/wgetrc : van welk programma is het pakketje
+
+
+
+terminal -----
+
+programma &  :start het programma op indien terminal afsluit programma ook de & zorgt ervoor dat het programma op de achter grond loopt
+pstree  : kan je zien of het programma een child programma is 
+nohup programma: indien terminal afgaat porgramma vlijft lopen.
+
+
+idnien je vergeet in back ground te laten lopen CTR Z in terminal : je programma krijgt geen processor tijd meer dan "bg" om dat proces in de achter grond te laten lopen 
+jobs: laat zien welk programma loopt
+ps : alle processen die lopen met hun uniek processor ID
+ps aux : alle processen van alle gebruikers
+top : alle processen 
+htop:human readible alle processen.
+kill procesnr: dood het volgende proces
+kill -15:sluit af , rustige afsluiten.
+kill -9 : instant kill
+killall -nummer programma : kill al deze programma's 
+
+
+proces schedduling
+crontab -e
+--------------------
+
+linken
+
+ln files.backup files.link  : hardlink -> kan nooit naar een directory verwijzen. Dit is een directe verwijzing naar de plaats waar het bestand staat.
+symlink: ln -s files.backup files.symlink : symbolic link -> kan naar een ander medium verwijzen , partitie  of andere disk , .... 
+
+FileGlobbing:
+? : 1 willekeurig teken
+* : alle 
+[]: hierin zetten welke zijn toegelaten
+bv: ???.[pP][dD][fF]
+
+
+
+Regular expr:
+? : 1 of geen 
+*: geen or meerdere
+...
+ fileGlobbing <> regular expression
+bv ls u*f : alle bestanden die beginnen met u en eindigen met f
+
+
+grep : zoekt een string in een bestand een( vb inv met het redirecten grep windows /etc/* >~/windowsFiles.txt 2>/dev/null
+      :-E '^cpu : lijnen die beginnen met cpu
+| : uitvoer van het 1ne programma naar het andere kopiëren. 
+cut : afsnijden (cut /etc/group -f2 -d: |sort >/temp/groupnames)
+
+wanneer pipen en wanneer redirecten ? 
+Redirecten is naar een file om weg te schrijven. BIj pipen geven we door naar het volgende programma.
+
+
+
+
+Soorten Paden
+
+relatief : begint van de plaats waar we momenteel zijn. bv pwd  EN dan  cd Downloads /
+
+absoluut: begint vanaf de root.  cd /home/WhatEverYouNeed.
+
+
+Tips ivm Scriptjes
+ 
+speciaal teken ~ zorgt dat je altijd naar gebruiker begin path gaat dmv "cd ~". Altijd gebruiken bij scriptjes.
+Voor scriptjes laten lopen altijd ./NaamVanHetScript
+
+GEBRUIKERS
+
+ soorten gebruikers
+1) router
+2) service accounts
+3) echte gebruikers
+
+
+swtichen tussen gebruikers : su - gebruiker    pwd
+
+
+/dev/null is de recyclebin in windows.
+
+een aantal files tellen in een folder vergeet niet LS want anders heb je geen lijst van de bestanden die er staan.
+
+
+Op zoek naar een commando : history | grep Commando
+
+
+
+
+
+
+--------------------------------------------------------------------
+
+1 – SYSTEM INFORMATION
+# Display Linux system information
+uname -a
+
+# Display kernel release information
+uname -r
+
+# Show which version of redhat installed
+cat /etc/redhat-release
+
+# Show how long the system has been running + load
+uptime
+
+# Show system host name
+hostname
+
+# Display the IP addresses of the host
+hostname -I
+
+# Show system reboot history
+last reboot
+
+# Show the current date and time
+date
+
+# Show this month's calendar
+cal
+
+# Display who is online
+w
+
+# Who you are logged in as
+whoami
+
+---------------------------------------------------
+2 – HARDWARE INFORMATION
+# Display messages in kernel ring buffer
+dmesg
+
+# Display CPU information
+cat /proc/cpuinfo
+
+# Display memory information
+cat /proc/meminfo
+
+# Display free and used memory ( -h for human readable, -m for MB, -g for GB.)
+free -h
+
+# Display PCI devices
+lspci -tv
+
+# Display USB devices
+lsusb -tv
+
+# Display DMI/SMBIOS (hardware info) from the BIOS
+dmidecode
+
+# Show info about disk sda
+hdparm -i /dev/sda
+
+# Perform a read speed test on disk sda
+hdparm -tT /dev/sda
+
+# Test for unreadable blocks on disk sda
+badblocks -s /dev/sda
+
+----------------------------------------------------------------------------
+3 – PERFORMANCE MONITORING AND STATISTICS
+# Display and manage the top processes
+top
+
+# Interactive process viewer (top alternative)
+htop
+
+# Display processor related statistics
+mpstat 1
+
+# Display virtual memory statistics
+vmstat 1
+
+# Display I/O statistics
+iostat 1
+
+# Display the last 100 syslog messages  (Use /var/log/syslog for Debian based systems.)
+tail 100 /var/log/messages
+
+# Capture and display all packets on interface eth0
+tcpdump -i eth0
+
+# Monitor all traffic on port 80 ( HTTP )
+tcpdump -i eth0 'port 80'
+
+# List all open files on the system
+lsof
+
+# List files opened by user
+lsof -u user
+
+# Display free and used memory ( -h for human readable, -m for MB, -g for GB.)
+free -h
+
+# Execute "df -h", showing periodic updates
+watch df -h
+----------------------------------------------------------------
+4 – USER INFORMATION AND MANAGEMENT
+# Display the user and group ids of your current user.
+id
+
+# Display the last users who have logged onto the system.
+last
+
+# Show who is logged into the system.
+who
+
+# Show who is logged in and what they are doing.
+w
+
+# Create a group named "test".
+groupadd test
+
+# Create an account named john, with a comment of "John Smith" and create the user's home directory.
+useradd -c "John Smith" -m john
+
+# Delete the john account.
+userdel john
+
+# Add the john account to the sales group
+usermod -aG sales john
+-----------------------------------------------------------------------
+5 – FILE AND DIRECTORY COMMANDS
+# List all files in a long listing (detailed) format
+ls -al
+
+# Display the present working directory
+pwd
+
+# Create a directory
+mkdir directory
+
+# Remove (delete) file
+rm file
+
+# Remove the directory and its contents recursively
+rm -r directory
+
+# Force removal of file without prompting for confirmation
+rm -f file
+
+# Forcefully remove directory recursively
+rm -rf directory
+
+# Copy file1 to file2
+cp file1 file2
+
+# Copy source_directory recursively to destination. If destination exists, copy source_directory into destination, otherwise create destination with the contents of source_directory.
+cp -r source_directory destination
+
+# Rename or move file1 to file2. If file2 is an existing directory, move file1 into directory file2
+mv file1 file2
+
+# Create symbolic link to linkname
+ln -s /path/to/file linkname
+
+# Create an empty file or update the access and modification times of file.
+touch file
+
+# View the contents of file
+cat file
+
+# Browse through a text file
+less file
+
+# Display the first 10 lines of file
+head file
+
+# Display the last 10 lines of file
+tail file
+
+# Display the last 10 lines of file and "follow" the file as it grows.
+tail -f file
+
+------------------------------------------------------------------------------------------
+
+6 – PROCESS MANAGEMENT
+# Display your currently running processes
+ps
+
+# Display all the currently running processes on the system.
+ps -ef
+
+# Display process information for processname
+ps -ef | grep processname
+
+# Display and manage the top processes
+top
+
+# Interactive process viewer (top alternative)
+htop
+
+# Kill process with process ID of pid
+kill pid
+
+# Kill all processes named processname
+killall processname
+
+# Start program in the background
+program &
+
+# Display stopped or background jobs
+bg
+
+# Brings the most recent background job to foreground
+fg
+
+# Brings job n to the foreground
+fg n
+
+
+
+---------------------------------------------------------------------------------------------------------
+8 – NETWORKING
+# Display all network interfaces and ip address
+ifconfig -a
+
+# Display eth0 address and details
+ifconfig eth0
+
+# Query or control network driver and hardware settings
+ethtool eth0
+
+# Send ICMP echo request to host
+ping host
+
+# Display whois information for domain
+whois domain
+
+# Display DNS information for domain
+dig domain
+
+# Reverse lookup of IP_ADDRESS
+dig -x IP_ADDRESS
+
+# Display DNS ip address for domain
+host domain
+
+# Display the network address of the host name.
+hostname -i
+
+# Display all local ip addresses
+hostname -I
+
+# Download http://domain.com/file
+wget http://domain.com/file
+
+# Display listening tcp and udp ports and corresponding programs
+netstat -nutlp
+
+# Create tar named archive.tar containing directory.
+tar cf archive.tar directory
+
+# Extract the contents from archive.tar.
+tar xf archive.tar
+
+# Create a gzip compressed tar file name archive.tar.gz.
+tar czf archive.tar.gz directory
+
+# Extract a gzip compressed tar file.
+tar xzf archive.tar.gz
+
+# Create a tar file with bzip2 compression
+tar cjf archive.tar.bz2 directory
+
+# Extract a bzip2 compressed tar file.
+tar xjf archive.tar.bz2
+10 – INSTALLING PACKAGES
+# Search for a package by keyword.
+yum search keyword
+
+# Install package.
+yum install package
+
+# Display description and summary information about package.
+yum info package
+
+# Install package from local file named package.rpm
+rpm -i package.rpm
+
+# Remove/uninstall package.
+yum remove package
+
+# Install software from source code.
+tar zxvf sourcecode.tar.gz
+cd sourcecode
+./configure
+make
+make install
+11 – SEARCH
+# Search for pattern in file
+grep pattern file
+
+# Search recursively for pattern in directory
+grep -r pattern directory
+
+# Find files and directories by name
+locate name
+
+# Find files in /home/john that start with "prefix".
+find /home/john -name 'prefix*'
+
+# Find files larger than 100MB in /home
+find /home -size +100M
+12 – SSH LOGINS
+# Connect to host as your local username.
+ssh host
+
+# Connect to host as user
+ssh user@host
+
+# Connect to host using port
+ssh -p port user@host
+13 – FILE TRANSFERS
+# Secure copy file.txt to the /tmp folder on server
+scp file.txt server:/tmp
+
+# Copy *.html files from server to the local /tmp folder.
+scp server:/var/www/*.html /tmp
+
+# Copy all files and directories recursively from server to the current system's /tmp folder.
+scp -r server:/var/www /tmp
+
+# Synchronize /home to /backups/home
+rsync -a /home /backups/
+
+# Synchronize files/directories between the local and remote system with compression enabled
+rsync -avz /home server:/backups/
+14 – DISK USAGE
+# Show free and used space on mounted filesystems
+df -h
+
+# Show free and used inodes on mounted filesystems
+df -i
+
+# Display disks partitions sizes and types
+fdisk -l
+
+# Display disk usage for all files and directories in human readable format
+du -ah
+
+# Display total disk usage off the current directory
+du -sh
+15 – DIRECTORY NAVIGATION
+# To go up one level of the directory tree.  (Change into the parent directory.)
+cd ..
+
+# Go to the $HOME directory
+cd
+
+# Change to the /etc directory
+cd /etc
+
+
+
+
+
+
+
+
+
+
+
+

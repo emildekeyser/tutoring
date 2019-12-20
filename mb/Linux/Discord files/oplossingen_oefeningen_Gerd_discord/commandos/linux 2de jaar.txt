@@ -1,0 +1,60 @@
+============
+Test - if
+============
+
+String tests
+------------
+[ string1 = string2 ]
+[ string1 != string2 ]
+[ -z string ] 			True als string leeg is
+[ -n string ]       	True als string niet leeg
+
+File tests
+----------
+[ -d file ] 			true als directory
+[ -e file ] 			true als exists, file of dir
+[ -f file ] 			true als file
+[ -r file ] 			true als readable
+[ -w file ] 			true als writable
+[ -x file ] 			true als executable
+[ file1 -nt file2 ] 	file1 is nieuwer als file2
+[ file1 -ot file2 ] 	file1 is ouder dan file2
+
+Getallen tests
+--------------
+[ getal1 -lt  getal2 ] 		getal1<getal2
+[ getal1 -le  getal2 ] 		getal1<=getal2
+[ getal1 -eq getal2 ] 		getal1=getal2
+[ getal1 -ge getal2 ] 		getal1>=getal2
+[ getal1 -gt  getal2 ] 		getal1>getal2
+[ getal1 -ne getal2 ] 		getal1!=getal2
+
+
+
+===========
+Hoofstuk 1
+===========
+
+#Geeft de gebruiker een prompt om iets in te geven, in dit geval een wachtwoord
+read -s -p "Paswoord:" mogelijkpaswoord
+
+===========
+Hoofstuk 2
+===========
+#om string te formateren:
+dateString=$(date '+%Y_%m_%d_%H_%M_%S')
+
+#find bestanden die recent gewijzigd zijn:
+find $searchDir -type f -cmin -500 -print0
+
+#maak een backup van de bovenstaande bestanden (commando's aaneen linken met '|')
+tar -czvf "backup_${dateString}.tar.gz" --null -T -
+
+===========
+Hoofstuk 3
+===========
+
+===========
+Hoofstuk 3
+===========
+

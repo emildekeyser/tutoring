@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=Member
+comment1.params=firstName\ lastName\ eMail\ month\ year
+comment1.target=Member(java.lang.String,\ java.lang.String,\ java.lang.String,\ int,\ int)
+comment2.params=
+comment2.target=java.lang.String\ getFirstName()
+comment2.text=\r\n\ @return\ the\ firstName\r\n
+comment3.params=
+comment3.target=java.lang.String\ getLastName()
+comment3.text=\r\n\ @return\ the\ lastName\r\n
+comment4.params=
+comment4.target=java.lang.String\ geteMail()
+comment4.text=\r\n\ @return\ the\ eMail\r\n
+comment5.params=
+comment5.target=int\ getMonth()
+comment5.text=\r\n\ @return\ the\ month\r\n
+comment6.params=
+comment6.target=int\ getYear()
+comment6.text=\r\n\ @return\ the\ year\r\n
+numComments=7

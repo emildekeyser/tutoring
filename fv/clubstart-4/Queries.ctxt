@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Queries
+comment1.params=c
+comment1.target=Queries(java.sql.Connection)
+comment2.params=
+comment2.target=java.sql.ResultSet\ query1()
+comment3.params=
+comment3.target=java.sql.ResultSet\ query2()
+numComments=4

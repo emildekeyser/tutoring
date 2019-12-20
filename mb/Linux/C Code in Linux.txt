@@ -1,0 +1,17 @@
+C-code in linux
+
+// Je moet eerst de file maken met de code
+
+// check na hoe
+
+
+// je installeert gcc
+sudo apt-get update
+sudo apt install gcc
+
+
+//gebruikt het programma , hello is de oproepnaam van het prgramma, forkdemo.C is de bestandsnaam
+gcc -o hello forkdemo.c
+
+// voer de code uit door ./{naam die jee gegeven hebt}
+./hello

@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+list=${2?"USAGE: $(basename $0) [HIGHLIGHTEDCLASS] [FILE]"}
+classAcount=0
+classBcount=0
+classCcount=0
+highlightedchar=${1?"USAGE: $(basename $0) [HIGHLIGHTEDCLASS] [FILE]"}
+
+rood='[0;31m'
+reset='[0m'
+shopt -q -s extglob
+
+function getOctet() {
+  ipoctet=`echo ${1##*[:]}`
+  ipoctet=${ipoctet%%-*}
+  ipoctet=${ipoctet%%[.]*}
+  if [[ $ipoctet -ge 0 && $ipoctet -le 127 ]]; then
+    echo "A"
+  elif [[ $ipoctet -ge 128 && $ipoctet -le 191 ]]; then
+    echo "B"
+  elif [[ $ipoctet -ge 192 ]]; then
+    echo "C"
+  fi
+}
+function tooninkleur() {
+  echo -e "\e$rood $1 \e$reset"
+}
+if [[ $EUID -ne 0 ]]; then
+  echo  "run as root..."; exit 1;
+fi
+
+if [[ ! -s $2  ]]; then
+  echo "the file you have given is not found..."; exit 1;
+fi
+for line in  `cat $list` ;
+do
+  CLASSDEFINED=`getOctet $line`
+  case $CLASSDEFINED in
+    "A" )
+      let "classAcount=classAcount+1"
+      ;;
+    "B" )
+      let "classBcount=classBcount+1"
+      ;;
+    "C" )
+      let "classCcount=classCcount+1"
+      ;;
+    *)
+      echo "$line contains invalid ip..."
+      exit 1;
+      ;;
+  esac
+done
+
+case $highlightedchar in
+  "A" )
+    tooninkleur "A: $classAcount"
+    echo B: $classBcount
+    echo C: $classCcount
+    ;;
+  "B" )
+    echo A: $classAcount
+    tooninkleur "B: $classBcount"
+    echo C: $classCcount
+    ;;
+  "C" )
+    echo A: $classAcount
+    echo B: $classBcount
+    tooninkleur "C: $classCcount"
+    ;;
+  *)
+    echo "no match found for highlighted character... writing everything normally"
+    echo A: $classAcount
+    echo B: $classBcount
+    echo C: $classCcount
+esac
+shopt -q -u extglob

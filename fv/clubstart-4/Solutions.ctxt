@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Solutions
+comment1.params=rs1\ rs2
+comment1.target=boolean\ checkResultSets(java.sql.ResultSet,\ java.sql.ResultSet)
+comment2.params=
+comment2.target=java.sql.ResultSet\ Query1()
+comment3.params=
+comment3.target=java.sql.ResultSet\ Query2()
+numComments=4

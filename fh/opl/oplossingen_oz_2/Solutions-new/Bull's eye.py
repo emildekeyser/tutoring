@@ -1,0 +1,16 @@
+from graphics import GraphicsWindow
+
+win = GraphicsWindow(100, 100)
+canvas = win.canvas()
+canvas.setColor("Black")
+canvas.drawRectangle(0, 0, 100, 100)
+canvas.drawOval(0, 0, 100, 100)
+canvas.setColor("White")
+canvas.drawOval(10, 10, 80, 80)
+canvas.setColor("Black")
+canvas.drawOval(20, 20, 60, 60)
+canvas.setColor("White")
+canvas.drawOval(30, 30, 40, 40)
+canvas.setColor("Red")
+canvas.drawOval(40, 40, 20, 20)
+win.wait()

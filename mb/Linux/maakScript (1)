@@ -1,0 +1,9 @@
+#!/bin/bash
+IFS=$'\n'
+bestand=example
+echo Geef de naam van het script dat je wil maken:
+read naam
+for i in `cat $bestand`; do
+	echo "${i}" >> $naam
+done
+chmod +x $naam
